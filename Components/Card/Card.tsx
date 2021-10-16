@@ -14,10 +14,7 @@ const Card = ({ item }: Props) => {
     <Pressable
       onPress={() =>
         navigation.navigate(HomeRoutes.DETAIL, {
-          uri: item.urls.regular,
-          description: item.alt_description,
-          portfolio: item.user.social.portfolio_url,
-          name: item.user.name,
+          id: item.id,
         })
       }
     >

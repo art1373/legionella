@@ -12,7 +12,7 @@ type Props = {
 };
 const FullCard = ({ uri, name, goToPortfolio, portfolio }: Props) => {
   return (
-    <View animation="fadeIn" duration={600} style={[Helpers.fill]}>
+    <View animation="fadeIn" duration={600} style={[Helpers.fillScreen]}>
       <FastImage
         source={{ uri, priority: FastImage.priority.high }}
         style={StyleSheet.absoluteFillObject}
@@ -30,7 +30,7 @@ const FullCard = ({ uri, name, goToPortfolio, portfolio }: Props) => {
 const styles = StyleSheet.create({
   descriptionView: {
     position: "absolute",
-    bottom: 40,
+    bottom: 130,
     left: 20,
     paddingVertical: 20,
   },

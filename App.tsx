@@ -1,9 +1,11 @@
-import React from 'react';
-import * as Redux from 'react-redux';
-import {PersistGate} from 'redux-persist/lib/integration/react';
-import {persistor, store} from './Stores';
-import RootScreen from './Containers/Root/RootScreen';
+import React from "react";
+import * as Redux from "react-redux";
+import { PersistGate } from "redux-persist/lib/integration/react";
+import { persistor, store } from "./Stores";
+import RootScreen from "./Containers/Root/RootScreen";
+import { LogBox } from "react-native";
 
+LogBox.ignoreAllLogs(true);
 const App = () => {
   return (
     <Redux.Provider store={store}>

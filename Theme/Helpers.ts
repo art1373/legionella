@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { Colors } from "../Theme";
+import { screen } from "../utils/metrics";
 
 export default StyleSheet.create({
   backgroundReset: {
@@ -42,6 +43,10 @@ export default StyleSheet.create({
   },
   fill: {
     flex: 1,
+  },
+  fillScreen: {
+    width: screen.width,
+    height: screen.height,
   },
   fillCenter: {
     alignItems: "center",

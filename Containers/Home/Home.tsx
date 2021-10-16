@@ -1,43 +1,24 @@
 import * as React from "react";
 import * as Redux from "react-redux";
-import {
-  FlatList,
-  Pressable,
-  SafeAreaView,
-  StyleSheet,
-  ActivityIndicator,
-} from "react-native";
-import FastImage from "react-native-fast-image";
+import { FlatList, SafeAreaView, ActivityIndicator } from "react-native";
 import { fetchPictureWithPagination } from "../../Stores/Pictures/actions";
 import { getPictures } from "../../Stores/Pictures/selectors";
 import { Picture } from "../../Stores/pictures/constants";
-import { useNavigation } from "@react-navigation/core";
-import { HomeRoutes } from "../../utils/constants";
 import { useOrientation } from "../../utils/hooks/useOrientation";
 import { Colors, Helpers } from "../../Theme";
+import { PhotoCard } from "../../Components";
 
 const Home = () => {
-  const navigation = useNavigation();
   const dispatch = Redux.useDispatch();
   const pictures = Redux.useSelector(getPictures);
   const [offset, setoffset] = React.useState(1);
   const orientation = useOrientation();
   const isLandScape = Boolean(orientation === "LANDSCAPE");
 
-  const renderItem = React.useCallback(({ item }: { item: Picture }) => {
-    return (
-      <Pressable
-        onPress={() =>
-          navigation.navigate(HomeRoutes.DETAIL, { uri: item.urls.regular })
-        }
-      >
-        <FastImage
-          source={{ uri: item.urls.regular, priority: FastImage.priority.high }}
-          style={styles.imageItem}
-        />
-      </Pressable>
-    );
-  }, []);
+  const renderItem = React.useCallback(
+    ({ item }: { item: Picture }) => <PhotoCard item={item} />,
+    []
+  );
 
   const fetchNext = React.useCallback(() => {
     setoffset((prev) => prev + 1);
@@ -69,15 +50,5 @@ const Home = () => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  imageItem: {
-    width: 200,
-    height: 200,
-    aspectRatio: 1,
-    borderWidth: 3,
-    borderColor: "white",
-  },
-});
 
 export default Home;

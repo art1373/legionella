@@ -12,6 +12,16 @@ type Url = {
   thumb: string;
 };
 
+interface Social {
+  instagram_username: string;
+  paypal_email: string;
+  portfolio_url: string;
+  twitter_username: string;
+}
+interface User {
+  name: string;
+  social: Social;
+}
 export interface Picture {
   id: string;
   width: number;
@@ -19,6 +29,9 @@ export interface Picture {
   blur_hash: string;
   created_at: string;
   urls: Url;
+  alt_description: string;
+  portfolio_url: string;
+  user: User;
 }
 
 export type FetchPicturesAction = {

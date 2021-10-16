@@ -12,12 +12,15 @@ import { getPictures } from "../../Stores/Pictures/selectors";
 import { Picture } from "../../Stores/pictures/constants";
 import { useNavigation } from "@react-navigation/core";
 import { HomeRoutes } from "../../utils/constants";
+import { useOrientation } from "../../utils/hooks/useOrientation";
 
 const Home = () => {
   const navigation = useNavigation();
   const dispatch = Redux.useDispatch();
   const pictures = Redux.useSelector(getPictures);
   const [offset, setoffset] = React.useState(1);
+  const orientation = useOrientation();
+
   const renderItem = React.useCallback(({ item }: { item: Picture }) => {
     return (
       <Pressable
@@ -25,7 +28,7 @@ const Home = () => {
           navigation.navigate(HomeRoutes.DETAIL, { uri: item.urls.regular })
         }
       >
-        <Image source={{ uri: item.urls.thumb }} style={styles.imageItem} />
+        <Image source={{ uri: item.urls.regular }} style={styles.imageItem} />
       </Pressable>
     );
   }, []);
@@ -42,10 +45,12 @@ const Home = () => {
     <SafeAreaView>
       <FlatList
         data={pictures}
-        keyExtractor={(picture) => picture.id}
+        key={Boolean(orientation === "LANDSCAPE") ? 0 : 2}
+        horizontal={Boolean(orientation === "LANDSCAPE")}
+        keyExtractor={(picture) => picture.id + picture.blur_hash}
         renderItem={renderItem}
         onEndReached={fetchNext}
-        numColumns={4}
+        numColumns={Boolean(orientation === "LANDSCAPE") ? 0 : 2}
       />
     </SafeAreaView>
   );

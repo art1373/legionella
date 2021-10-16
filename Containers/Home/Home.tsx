@@ -47,7 +47,7 @@ const Home = () => {
         data={pictures}
         key={Boolean(orientation === "LANDSCAPE") ? 0 : 2}
         horizontal={Boolean(orientation === "LANDSCAPE")}
-        keyExtractor={(picture) => picture.id + picture.blur_hash}
+        keyExtractor={(picture) => picture.id}
         renderItem={renderItem}
         onEndReached={fetchNext}
         numColumns={Boolean(orientation === "LANDSCAPE") ? 0 : 2}

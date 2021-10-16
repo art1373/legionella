@@ -1,9 +1,8 @@
 import * as React from "react";
 import { useRoute } from "@react-navigation/core";
-import { Linking, StyleSheet, TouchableOpacity } from "react-native";
-import { Text, View } from "react-native-animatable";
-import FastImage from "react-native-fast-image";
-import { Colors, Helpers } from "../../Theme";
+import { Linking, StyleSheet } from "react-native";
+import { Colors } from "../../Theme";
+import { FullPhotoCard } from "../../Components";
 
 type RouteParams = {
   uri: string;
@@ -13,8 +12,7 @@ type RouteParams = {
 };
 
 const Detail = () => {
-  const { uri, description, portfolio, name } = useRoute()
-    .params as RouteParams;
+  const { uri, portfolio, name } = useRoute().params as RouteParams;
 
   const goToPortfolio = React.useCallback(async (link) => {
     const canOpen = await Linking.canOpenURL(link);
@@ -22,18 +20,12 @@ const Detail = () => {
   }, []);
 
   return (
-    <View animation="slideInLeft" duration={600} style={[Helpers.fill]}>
-      <FastImage
-        source={{ uri, priority: FastImage.priority.high }}
-        style={StyleSheet.absoluteFillObject}
-      />
-      <View style={styles.descriptionView}>
-        <Text style={styles.moreInfo}>Photo by: {name}</Text>
-        <TouchableOpacity onPress={() => goToPortfolio(portfolio)}>
-          <Text style={styles.visitPorfile}>Visit portfolio</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    <FullPhotoCard
+      name={name}
+      uri={uri}
+      portfolio={portfolio}
+      goToPortfolio={goToPortfolio}
+    />
   );
 };
 

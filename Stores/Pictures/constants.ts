@@ -2,8 +2,8 @@ export const initialState = {
   pictures: [],
 };
 
-export const FETCH_PICTURES = 'FETCH_PICTURES';
-export const SET_PICTURES = 'SET_PICTURES';
+export const FETCH_PICTURES = "FETCH_PICTURES";
+export const SET_PICTURES = "SET_PICTURES";
 
 type Url = {
   full: string;
@@ -20,3 +20,9 @@ export interface Picture {
   created_at: string;
   urls: Url;
 }
+
+export type FetchPicturesAction = {
+  offset: string | number;
+  onSucces: Function;
+  onFailure: Function;
+};

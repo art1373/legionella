@@ -1,12 +1,14 @@
-import {initialState, SET_PICTURES} from './constants';
-import update from 'immutability-helper';
+import { initialState, SET_PICTURES } from "./constants";
+import update from "immutability-helper";
 
 export const picturesReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case SET_PICTURES:
       return update(state, {
-        pictures: {$push: action.pictures},
+        pictures: { $push: action.pictures },
       });
+
+    default:
+      return state;
   }
-  return state;
 };

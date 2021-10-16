@@ -2,17 +2,19 @@ import * as React from "react";
 import * as Redux from "react-redux";
 import {
   FlatList,
-  Image,
   Pressable,
   SafeAreaView,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native";
+import FastImage from "react-native-fast-image";
 import { fetchPictureWithPagination } from "../../Stores/Pictures/actions";
 import { getPictures } from "../../Stores/Pictures/selectors";
 import { Picture } from "../../Stores/pictures/constants";
 import { useNavigation } from "@react-navigation/core";
 import { HomeRoutes } from "../../utils/constants";
 import { useOrientation } from "../../utils/hooks/useOrientation";
+import { Colors, Helpers } from "../../Theme";
 
 const Home = () => {
   const navigation = useNavigation();
@@ -20,6 +22,7 @@ const Home = () => {
   const pictures = Redux.useSelector(getPictures);
   const [offset, setoffset] = React.useState(1);
   const orientation = useOrientation();
+  const isLandScape = Boolean(orientation === "LANDSCAPE");
 
   const renderItem = React.useCallback(({ item }: { item: Picture }) => {
     return (
@@ -28,7 +31,10 @@ const Home = () => {
           navigation.navigate(HomeRoutes.DETAIL, { uri: item.urls.regular })
         }
       >
-        <Image source={{ uri: item.urls.regular }} style={styles.imageItem} />
+        <FastImage
+          source={{ uri: item.urls.regular, priority: FastImage.priority.high }}
+          style={styles.imageItem}
+        />
       </Pressable>
     );
   }, []);
@@ -43,15 +49,23 @@ const Home = () => {
 
   return (
     <SafeAreaView>
-      <FlatList
-        data={pictures}
-        key={Boolean(orientation === "LANDSCAPE") ? 0 : 2}
-        horizontal={Boolean(orientation === "LANDSCAPE")}
-        keyExtractor={(picture) => picture.id}
-        renderItem={renderItem}
-        onEndReached={fetchNext}
-        numColumns={Boolean(orientation === "LANDSCAPE") ? 0 : 2}
-      />
+      {!pictures.length ? (
+        <ActivityIndicator
+          size={40}
+          color={Colors.primary}
+          style={[Helpers.fullMarginTop]}
+        />
+      ) : (
+        <FlatList
+          data={pictures}
+          key={isLandScape ? 0 : 2}
+          horizontal={isLandScape}
+          keyExtractor={(picture) => picture.id}
+          renderItem={renderItem}
+          onEndReached={fetchNext}
+          numColumns={isLandScape ? 0 : 2}
+        />
+      )}
     </SafeAreaView>
   );
 };

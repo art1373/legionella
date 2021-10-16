@@ -1,9 +1,9 @@
-import {FETCH_PICTURES, Picture, SET_PICTURES} from './constants';
+import { FETCH_PICTURES, Picture, SET_PICTURES } from "./constants";
 
 export const fetchPictureWithPagination = (
   offset: number | string,
   onSucces?: Function,
-  onFailure?: Function,
+  onFailure?: Function
 ) => {
   return {
     type: FETCH_PICTURES,

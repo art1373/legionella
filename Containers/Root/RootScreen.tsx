@@ -1,12 +1,6 @@
-import React from 'react';
-import {AppNavigator} from '../../Navigators/AppNavigator';
-import {SafeAreaView} from 'react-native';
-import {Helpers} from '../../Theme';
+import React from "react";
+import { AppNavigator } from "../../Navigators/AppNavigator";
 
-const RootScreen = () => (
-  <SafeAreaView style={Helpers.fill}>
-    <AppNavigator />
-  </SafeAreaView>
-);
+const RootScreen = () => <AppNavigator />;
 
 export default RootScreen;

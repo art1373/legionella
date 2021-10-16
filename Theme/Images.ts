@@ -3,5 +3,5 @@
  */
 
 export default {
-  logo: require('../Assets/Images/atg.png'),
+  logo: require("../Assets/Images/logo.png"),
 };

@@ -10,6 +10,7 @@ import { View } from "react-native-animatable";
 import { Colors, Helpers } from "../../Theme";
 import ThumbCard from "../../Components/ThumbCard/ThumbCard";
 import { screen } from "../../utils/metrics";
+import { showMessage } from "react-native-flash-message";
 
 type RouteParams = {
   id: string;
@@ -24,7 +25,13 @@ const Detail = () => {
   const [activeIndex, setactiveIndex] = React.useState(0);
   const goToPortfolio = React.useCallback(async (link) => {
     const canOpen = await Linking.canOpenURL(link);
+
     if (canOpen) return Linking.openURL(link);
+    return showMessage({
+      type: "danger",
+      message: "Bummer!",
+      description: "seems like the link is broken!",
+    });
   }, []);
 
   const renderItem = React.useCallback(

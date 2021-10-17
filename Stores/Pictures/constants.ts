@@ -1,9 +1,11 @@
 export const initialState = {
   pictures: [],
+  offset: 1,
 };
 
 export const FETCH_PICTURES = "FETCH_PICTURES";
 export const SET_PICTURES = "SET_PICTURES";
+export const SET_OFFSET = "SET_OFFSET";
 
 type Url = {
   full: string;
@@ -35,7 +37,6 @@ export interface Picture {
 }
 
 export type FetchPicturesAction = {
-  offset: string | number;
   onSucces: Function;
   onFailure: Function;
 };

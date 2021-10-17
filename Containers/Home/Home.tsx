@@ -1,17 +1,21 @@
 import * as React from "react";
 import * as Redux from "react-redux";
 import { FlatList, SafeAreaView, ActivityIndicator } from "react-native";
-import { fetchPictureWithPagination } from "../../Stores/Pictures/actions";
-import { getPictures } from "../../Stores/Pictures/selectors";
+import {
+  fetchPictureWithPagination,
+  setOffset,
+} from "../../Stores/Pictures/actions";
+import { getOffset, getPictures } from "../../Stores/Pictures/selectors";
 import { Picture } from "../../Stores/pictures/constants";
 import { useOrientation } from "../../utils/hooks/useOrientation";
 import { Colors, Helpers } from "../../Theme";
 import { PhotoCard } from "../../Components";
+import { showMessage } from "react-native-flash-message";
 
 const Home = () => {
   const dispatch = Redux.useDispatch();
   const pictures = Redux.useSelector(getPictures);
-  const [offset, setoffset] = React.useState(1);
+  const offset = Redux.useSelector(getOffset);
   const orientation = useOrientation();
   const isLandScape = Boolean(orientation === "LANDSCAPE");
 
@@ -21,11 +25,23 @@ const Home = () => {
   );
 
   const fetchNext = React.useCallback(() => {
-    setoffset((prev) => prev + 1);
-  }, []);
+    dispatch(setOffset(offset + 1));
+  }, [offset]);
 
   React.useEffect(() => {
-    dispatch(fetchPictureWithPagination(offset));
+    dispatch(
+      fetchPictureWithPagination(
+        () => {
+          //do something if sucsess
+        },
+        () =>
+          showMessage({
+            message: "Uh oh!",
+            description: "oops! Something went wrong!",
+            type: "danger",
+          })
+      )
+    );
   }, [dispatch, offset]);
 
   return (
